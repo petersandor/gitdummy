@@ -28,7 +28,21 @@ def init():
     ignore = open(repo['dummy_repo'] + os.path.sep + '.gitignore', 'w+')
     ignore.write(".DS_Store\n")
     ignore.close()
-    
+
+    subprocess.call([
+        'git',
+        'config',
+        '--local',
+        'user.name',
+        repo['dummy_name']
+    ])
+    subprocess.call([
+        'git',
+        'config',
+        '--local',
+        'user.email',
+        repo['dummy_email']
+    ])
     subprocess.call([
         'git',
         'add',
@@ -138,7 +152,7 @@ for repo in repos:
 
             #this modification checks if commit message has a greater character length than Mac OS limit for filenames (=255)
             #may be useful for other OS
-            #without this change, for very long commit messages it will throw error: IOError: [Errno 63] File name too long 
+            #without this change, for very long commit messages it will throw error: IOError: [Errno 63] File name too long
             if len(commit['filename']) > 200:
                fullStr =  commit['filename']; commit['filename'] = fullStr[:200]
 
